@@ -1,3 +1,5 @@
+<img align="left" width="90" height="100" src="icon/IA_logo.png">
+
 # Tubeup on Github
 
 A GitHub template for automatic VOD archiving to IA using Tubeup on Github, powered by GitHub Actions
@@ -133,6 +135,12 @@ Create a text file with multiple URLs and modify the workflow to process them al
 ```
 
 ## Troubleshooting
+
+### YouTube Authentication Error
+
+When downloading from YouTube you may see an error such as ``ERROR: [youtube]: Sign in to confirm you’re not a bot.``, YouTube is requesting a logged‑in session  
+Pass cookies to **yt‑dlp** with `--cookies-from-browser` (recommended) or `--cookies path/to/cookies.txt`
+See the yt‑dlp FAQ on [passing cookies](https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp) and the guide on [exporting YouTube cookies](https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies) for details
 
 ### Authentication Errors
 
