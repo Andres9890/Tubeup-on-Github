@@ -5,6 +5,7 @@
 A GitHub template for automatic VOD archiving to IA using Tubeup on Github, powered by GitHub Actions
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+[![Archive Video to IA](https://github.com/Andres9890/Tubeup-on-Github/actions/workflows/tubeup.yml/badge.svg)](https://github.com/Andres9890/Tubeup-on-Github/actions/workflows/tubeup.yml)
 
 ## Features
 
