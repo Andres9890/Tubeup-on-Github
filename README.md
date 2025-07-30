@@ -10,8 +10,8 @@ A GitHub template for automatic VOD archiving to IA using Tubeup on Github, powe
 - Manual workflow dispatch with custom URL input
 - Automatic retry mechanism for failed uploads
 - Metadata preservation
-- Support for all youtube-dl-yt-dlp compatible platforms
-- Zero-config setup
+- Support for all yt-dlp compatible platforms
+- Easy setup
 
 ## Quick Start
 
@@ -27,12 +27,12 @@ Tubeup supports all platforms compatible with yt-dlp, including:
 - YouTube
 - Vimeo
 - Twitch VODs
-- Twitter/X
+- X
 - Instagram
 - TikTok
 - Dailymotion
 - Facebook
-And a lot more
+[And a lot more](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 
 ## How to Use
 
@@ -64,8 +64,9 @@ The GitHub Action workflow:
 - Triggers on manual dispatch
 - Can be triggered with custom video URLs
 - Uses Python to install and run tubeup
+- Installs ffmpeg for videos
 - Caches dependencies for faster execution
-- Authenticates with Internet Archive using secrets
+- Authenticates with IA using secrets
 
 ## Configuration
 
@@ -74,8 +75,8 @@ The GitHub Action workflow:
 Add these secrets in your repository settings:
 
 ```
-IA_EMAIL=example@example.com
-IA_PASSWORD=examplepassword
+IA_EMAIL=your_ia_email
+IA_PASSWORD=your_ia_password
 ```
 
 ### Modifying the Workflow
@@ -85,7 +86,7 @@ Edit `.github/workflows/tubeup.yml` to customize:
 - Add automatic triggering
 - Modify tubeup parameters
 - Add additional processing steps
-- Change Python version or dependencies
+- Change dependencies
 
 ### Default URL
 
@@ -101,7 +102,7 @@ You can change it by editing the workflow file
 ```
 ├── .github/
 │   └── workflows/
-│       └── tubeup.yml       # Main workflow
+│       └── tubeup.yml       # workflow
 ├── .gitattributes
 ├── LICENSE
 └── README.md
@@ -116,7 +117,7 @@ You can modify the workflow to put additional parameters to tubeup, for example:
 ```yaml
 - name: Run tubeup
   run: |
-    tubeup "${{ github.event.inputs.url }}" --metadata="creator:Example" --title="Example"
+    tubeup "${{ github.event.inputs.url }}" --metadata="creator:something" --title="something"
 ```
 
 ### Batch Processing
@@ -142,26 +143,17 @@ Create a text file with multiple URLs and modify the workflow to process them al
 
 - Verify that the video URL is accessible
 - Check if the platform is supported by yt-dlp
-- Some platforms may require cookies or authentication
+- Some websites may require cookies or authentication
 
 ### Upload Failures
 
 - Internet Archive may have rate limits
-- Large videos may (or may not) timeout, consider splitting into parts
-- Check if the content violates IA's content policy
+- Large videos may or may not timeout
 
 ### Workflow Errors
 
 - Check the workflow logs in the Actions tab
-- Ensure Python dependencies are installing correctly
-- Verify the syntax
-
-## Performance Tips
-
-1. **Archive during off-peak hours** for better performance
-2. **Consider video size** very large files may (or may not) timeout
-3. **Use caching** to speed up runs
-4. **Split large archives** into smaller batches
+- [Submit an issue](https://github.com/Andres9890/Tubeup-on-Github/issues/new/choose)
 
 ## Content Guidelines
 
@@ -175,10 +167,7 @@ Any videos uploaded with this tool are NOT my responsbility in any way
 
 ## Contributing
 
-Contributions are welcome:
-
-1. Fork the repository
-3. Make a pull request
+All contributions to the repo are welcome
 
 ## License
 
@@ -194,10 +183,10 @@ Tubeup on Github is licensed under the MIT License, see [`LICENSE`](LICENSE) for
 
 If issues happen:
 
-1. Check the [Troubleshooting](#troubleshooting) section
-2. Check the workflow logs in the Actions tab
-3. Check the [tubeup documentation](https://github.com/bibanon/tubeup)
-4. Create an issue with the detailed error logs
+- Check the [Troubleshooting section](#troubleshooting) section
+- Check the workflow logs
+- Check the [tubeup documentation](https://github.com/bibanon/tubeup)
+- Create an issue with the detailed error logs
 
 ---
 
