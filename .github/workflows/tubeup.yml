@@ -29,7 +29,7 @@ jobs:
           ~/.cache/yt-dlp
           ~/.deno
           ~/.ffmpeg
-        key: ${{ runner.os }}-archive-cache-${{ hashFiles('.github/workflows/t.yml') }}
+        key: ${{ runner.os }}-archive-cache-${{ hashFiles('.github/workflows/tubeup.yml') }}
         restore-keys: |
           ${{ runner.os }}-archive-cache-
 
