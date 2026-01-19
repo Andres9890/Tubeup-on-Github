@@ -1,8 +1,8 @@
 <img align="left" width="90" height="100" src="icon/IA_logo.png">
 
-# Tubeup on Github
+# tubeup on github
 
-A GitHub template for automatic VOD archiving to IA using Tubeup on Github, powered by GitHub Actions
+A GitHub template for VOD archiving to IA using tubeup, powered by GitHub Actions
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 [![Archive Video to IA](https://github.com/Andres9890/Tubeup-on-Github/actions/workflows/tubeup.yml/badge.svg)](https://github.com/Andres9890/Tubeup-on-Github/actions/workflows/tubeup.yml)
@@ -10,31 +10,27 @@ A GitHub template for automatic VOD archiving to IA using Tubeup on Github, powe
 ## Features
 
 - Archive videos from various platforms to IA
-- Manual workflow dispatch with custom URL input
-- Automatic retry mechanism for failed uploads
-- Metadata preservation
-- Support for all yt-dlp compatible platforms
 - Easy setup
 
 ## Quick Start
 
-1. **Use this template** to create your own repository
-2. **Add IA credentials** as repository secrets
-3. **Run workflow** with video URL to archive
-4. **Check Internet Archive** for the video
+1. Use this template to create your own repository
+2. Add IA credentials as repository secrets
+3. Run workflow with video URL to archive
+4. Check Internet Archive for the video
 
 ## Supported Video Platforms
 
 Tubeup supports all platforms compatible with yt-dlp, including:
 
 - YouTube
-- Vimeo
 - Twitch VODs
 - X
 - Instagram
 - TikTok
 - Dailymotion
 - Facebook
+
 [And a lot more](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 
 ## How to Use
@@ -57,30 +53,16 @@ Tubeup supports all platforms compatible with yt-dlp, including:
 The workflow will:
 - Download the video using yt-dlp
 - Upload it to Internet Archive
-- Preserve metadata and descriptions
-- Create a permanent archive link
 
 ## Workflow Details
 
 The GitHub Action workflow:
 
 - Triggers on manual dispatch
-- Can be triggered with custom video URLs
 - Uses Python to install and run tubeup
-- Installs ffmpeg for videos
-- Caches dependencies for faster execution
-- Authenticates with IA using secrets
-
-## Configuration
-
-### Required Secrets
-
-Add these secrets in your repository settings:
-
-```
-IA_EMAIL=your_ia_email
-IA_PASSWORD=your_ia_password
-```
+- Installs ffmpeg
+- Cache dependencies
+- Authenticates with IA
 
 ### Modifying the Workflow
 
@@ -105,7 +87,7 @@ You can change it by editing the workflow file
 ```
 ├── .github/
 │   └── workflows/
-│       └── tubeup.yml       # workflow
+│       └── tubeup.yml
 ├── .gitattributes
 ├── LICENSE
 └── README.md
@@ -172,7 +154,7 @@ When using this tool, please:
 - Archive only content you have permission to preserve
 - Follow Internet Archive's content guidelines
 - Be mindful of privacy and sensitive content
-Any videos uploaded with this tool are NOT my responsbility in any way
+Any videos uploaded with this tool are not my responsbility in any way
 
 ## Contributing
 
