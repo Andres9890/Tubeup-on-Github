@@ -1,4 +1,5 @@
 name: Archive Video to IA
+run-name: "Archive: ${{ inputs.url }}"
 
 on:
   workflow_dispatch:
@@ -13,39 +14,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Free Space
+      uses: insightsengineering/disk-space-reclaimer@v1
+      with:
+        tools-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
+
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v6
       with:
         python-version: '3.x'
 
-    - name: Cache pip, yt-dlp, Deno, FFmpeg
-      uses: actions/cache@v4.2.3
+    - name: Cache pip, yt-dlp, FFmpeg, and IA Config
+      uses: actions/cache@v5
       with:
         path: |
           ~/.cache/pip
           ~/.cache/yt-dlp
-          ~/.deno
           ~/.ffmpeg
+          ~/.config/internetarchive
         key: ${{ runner.os }}-archive-cache-${{ hashFiles('.github/workflows/tubeup.yml') }}
         restore-keys: |
           ${{ runner.os }}-archive-cache-
 
-    - name: Install Deno
-      run: |
-        curl -fsSL https://deno.land/install.sh | sh
-        echo "$HOME/.deno/bin" >> $GITHUB_PATH
+    - name: Set up Deno
+      uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x
 
-    - name: Install FFmpeg (download prebuilt build and cache)
+    - name: Install FFmpeg
       run: |
         set -euo pipefail
         FF_DIR="$HOME/.ffmpeg"
         mkdir -p "$FF_DIR"
         # use cached build if present
         if [ -x "$FF_DIR/bin/ffmpeg" ]; then
-          echo "FFmpeg is already cached"
+          echo "FFmpeg is already cached. Not downloading."
         else
           ARCHIVE_URL="https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz"
           TMPFILE="/tmp/ffmpeg.tar.xz"
@@ -67,8 +79,18 @@ jobs:
         IA_EMAIL: ${{ secrets.IA_EMAIL }}
         IA_PASSWORD: ${{ secrets.IA_PASSWORD }}
       run: |
-        printf "%s\n%s\n" "$IA_EMAIL" "$IA_PASSWORD" | ia configure
-
+        # Define the path to the config file
+        IA_CONFIG="$HOME/.config/internetarchive/ia.ini"
+        
+        # Check if the file exists from the cache
+        if [ -f "$IA_CONFIG" ]; then
+          echo "IA config found. Not logging in."
+        else
+          echo "IA config not found. Logging in..."
+          # Ensure directory exists just in case
+          mkdir -p "$HOME/.config/internetarchive"
+          printf "%s\n%s\n" "$IA_EMAIL" "$IA_PASSWORD" | ia configure
+        fi
     - name: Run tubeup
       run: |
         tubeup ${{ github.event.inputs.url }}
