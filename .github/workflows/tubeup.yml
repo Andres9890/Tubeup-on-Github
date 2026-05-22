@@ -8,6 +8,11 @@ on:
         description: 'video URL to archive'
         required: true
         default: 'https://youtu.be/dQw4w9WgXcQ'
+      free_space:
+        description: 'Free space for large Downloads'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   archive:
@@ -15,9 +20,10 @@ jobs:
 
     steps:
     - name: Free Space
-      uses: insightsengineering/disk-space-reclaimer@v1
+      if: ${{ inputs.free_space == 'true' || inputs.free_space == true }}
+      uses: BRAINSia/free-disk-space@main
       with:
-        tools-cache: true
+        tool-cache: true
         android: true
         dotnet: true
         haskell: true
@@ -26,15 +32,15 @@ jobs:
         swap-storage: true
 
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@main
 
     - name: Set up Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@main
       with:
         python-version: '3.x'
 
     - name: Cache pip, yt-dlp, FFmpeg, and IA Config
-      uses: actions/cache@v5
+      uses: actions/cache@main
       with:
         path: |
           ~/.cache/pip
@@ -46,9 +52,9 @@ jobs:
           ${{ runner.os }}-archive-cache-
 
     - name: Set up Deno
-      uses: denoland/setup-deno@v2
+      uses: denoland/setup-deno@main
       with:
-        deno-version: v2.x
+        deno-version: latest
 
     - name: Install FFmpeg
       run: |
