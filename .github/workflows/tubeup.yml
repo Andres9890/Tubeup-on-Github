@@ -11,7 +11,7 @@ on:
       free_space:
         description: 'Free space for large Downloads'
         required: false
-        default: false
+        default: true
         type: boolean
 
 jobs:
